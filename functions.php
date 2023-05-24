@@ -1,4 +1,5 @@
 <?php 
+
 // koneksi ke databases
 $conn = mysqli_connect("localhost","root","","phpdasar");//mysqli_connect(host,username,password,nama database)
 

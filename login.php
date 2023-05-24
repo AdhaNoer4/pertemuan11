@@ -1,4 +1,11 @@
 <?php 
+// mulai session
+session_start();
+
+if(isset($_SESSION['login'])) :
+    echo "<script>window.location.href = 'index.php';</script>";
+endif;
+
 // koneksi dtabase
 require 'functions.php';
  // apakah tombol login sudah ditekan
@@ -13,6 +20,8 @@ require 'functions.php';
             // cek password
             $row = mysqli_fetch_assoc($result);
             if(password_verify($password, $row['password'])){
+                // set seission
+                $_SESSION['login'] = true;
                 header("Location: index.php");
                 exit;
             }

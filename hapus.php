@@ -1,4 +1,9 @@
 <?php 
+session_start();
+if(isset($_SESSION['login'])) :
+    echo "<script>window.location.href = 'login.php';</script>";
+endif;
+
 require 'functions.php';
 
 $id = $_GET['id'];

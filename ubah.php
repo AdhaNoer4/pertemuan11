@@ -1,4 +1,11 @@
 <?php 
+// mulai session
+session_start();
+
+if(!isset($_SESSION['login'])){ // jika belum login maka balikan ke halaman login.php
+    header('Location: login.php');
+    exit;
+}
 // koneksi databases
 require "functions.php";
 

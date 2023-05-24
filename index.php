@@ -1,4 +1,11 @@
 <?php 
+// mulai session
+session_start();
+
+if(!isset($_SESSION['login'])){ // jika belum login maka balikan ke halaman login.php
+    header('Location: login.php');
+    exit;
+}
 require 'functions.php'; // memanggil file functions
 $mahasiswa = query("SELECT * FROM mahasiswa");
 
@@ -17,6 +24,7 @@ if(isset($_POST['cari'])){
     <title>Halaman Admin</title>
 </head>
 <body>
+    <a href="logout.php" style="text-align : right;">Logout</a>
     <h1>Daftar Mahasiswa</h1>
    
     <a href="tambah.php">Tambah</a><br><br>
