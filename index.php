@@ -6,8 +6,20 @@ if(!isset($_SESSION['login'])){ // jika belum login maka balikan ke halaman logi
     header('Location: login.php');
     exit;
 }
+
 require 'functions.php'; // memanggil file functions
-$mahasiswa = query("SELECT * FROM mahasiswa");
+// Pagination
+// Konfigurasi
+$jumlahDataPerHalaman = 3;
+$jumlahData = count(query("SELECT * FROM mahasiswa"));// jumlah seluruh data
+$jumlahHalaman = ceil($jumlahData / $jumlahDataPerHalaman);
+// round = untuk membulatkan data ke bilangan bulat terdekat
+// floor = untuk membulatkan data ke bilangan bulat kebawah
+// ceil = untuk membulatkan data ke bilangan bulat keatas
+$halamanAktif = (isset($_GET["halaman"])) ? $_GET["halaman"] : 1;
+$awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
+
+$mahasiswa = query("SELECT * FROM mahasiswa LIMIT $awalData, 3");// LIMIT untuk membatasi data yang di tampilkan
 
 // ketika tombol cari ditekan
 if(isset($_POST['cari'])){
@@ -32,6 +44,25 @@ if(isset($_POST['cari'])){
         <input type="text" name="keyword" size="40" autofocus placeholder="Masukan Keyword..." autocomplete="off">
         <button type="submit" name="cari" >Cari</button>
         </form>
+        <br>
+        <br>
+       <!-- Navigasi -->
+       <?php if($halamanAktif > 1): ?> 
+       <a href="?halaman=<?= $halamanAktif - 1; ?>">&laquo;</a>
+       <?php endif; ?>
+
+       <?php for($i =1; $i <= $jumlahHalaman; $i++) : ?>
+            <?php if($i == $halamanAktif) : ?>
+                <a href="?halaman=<?= $i; ?>" style="font-weight: bold ; color: red;"><?= $i; ?></a>
+            <?php else : ?>
+                <a href="?halaman=<?= $i; ?>"><?= $i; ?></a>
+        <?php endif; ?>
+        <?php endfor; ?>
+
+        <?php if($halamanAktif < $jumlahHalaman): ?> 
+       <a href="?halaman=<?= $halamanAktif + 1; ?>">&raquo;</a>
+       <?php endif; ?>
+
     <table border="1" cellpadding="10" cellspacing="0">
         <tr>
             <th>No.</th>
