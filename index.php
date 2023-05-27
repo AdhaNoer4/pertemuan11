@@ -19,7 +19,13 @@ $jumlahHalaman = ceil($jumlahData / $jumlahDataPerHalaman);
 $halamanAktif = (isset($_GET["halaman"])) ? $_GET["halaman"] : 1;
 $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
 
-$mahasiswa = query("SELECT * FROM mahasiswa LIMIT $awalData, 3");// LIMIT untuk membatasi data yang di tampilkan
+$mahasiswa = query("SELECT * FROM mahasiswa LIMIT $awalData, $jumlahDataPerHalaman");// LIMIT untuk membatasi data yang di tampilkan
+
+//jika button cari di tekan maka hilangkan pagination
+if(isset($_POST['cari'])){
+    $jumlahHalaman = false;
+    
+}
 
 // ketika tombol cari ditekan
 if(isset($_POST['cari'])){
@@ -40,9 +46,9 @@ if(isset($_POST['cari'])){
     <h1>Daftar Mahasiswa</h1>
    
     <a href="tambah.php">Tambah</a><br><br>
-    <form action="" method="post">
-        <input type="text" name="keyword" size="40" autofocus placeholder="Masukan Keyword..." autocomplete="off">
-        <button type="submit" name="cari" >Cari</button>
+        <form action="" method="post">
+            <input type="text" name="keyword" size="40" autofocus placeholder="Masukan Keyword..." autocomplete="off">
+                <button type="submit" name="cari" >Cari</button>
         </form>
         <br>
         <br>
