@@ -1,4 +1,5 @@
 <?php 
+sleep(1);// hanya untuk ketika simulasi internet lambat
 require '../functions.php';
 
 $keyword = $_GET['keyword'];
